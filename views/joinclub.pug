@@ -6,11 +6,6 @@ block content
   form(action="", method="post") 
     label(for="secret") Enter secret password
       input#secret(type="password", name="secret", required)
-    input(
-      type="hidden",
-      name="userid",
-      value=currentUser ? currentUser._id : ""
-    )
     button(type="submit") Join
 
   +errorlist(errors)

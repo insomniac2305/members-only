@@ -115,7 +115,7 @@ exports.joinClubPost = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
-    const user = await User.findById(req.body.userid);
+    const user = await User.findById(req.user._id);
 
     if (!errors.isEmpty() || !user) {
       res.render("joinclub", {
@@ -126,7 +126,7 @@ exports.joinClubPost = [
     }
 
     user.isMember = true;
-    user.save();
+    await user.save();
 
     res.redirect("/");
   }),
