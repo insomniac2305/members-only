@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  isMember: { type: String, default: false },
+  isMember: { type: Boolean, default: false },
 });
 
 userSchema.virtual("name").get(function () {
