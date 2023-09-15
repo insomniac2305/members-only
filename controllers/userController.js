@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 const User = require("../models/user");
 
@@ -77,6 +78,26 @@ exports.joinClubGet = (req, res, next) => {
   res.render("joinclub", { title: "Join club" });
 };
 
-exports.joinClubPost = (req, res, next) => {
-  res.render("joinclub", { title: "Join club" });
-};
+exports.joinClubPost = [
+  bodyRequired("secret", "Secret password")
+    .custom((secret) => secret === process.env.CLUB_SECRET)
+    .withMessage("The provided secret is incorrect"),
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const user = await User.findById(req.body.userid);
+
+    if (!errors.isEmpty() || !user) {
+      res.render("joinclub", {
+        title: "Join club",
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    user.isMember = true;
+    user.save();
+
+    res.redirect("/");
+  }),
+];

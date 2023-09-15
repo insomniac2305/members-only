@@ -1,4 +1,12 @@
 extends layout
+include mixins/errorlist.pug
 
 block content
   h1= title
+  form(action="" method="post") 
+    label(for="secret") Enter secret password
+      input#secret(type="password" name="secret" required)
+    input(type="hidden", name="userid" value="6503665690145e1b86596286")
+    button(type="submit") Join
+
+  +errorlist(errors)

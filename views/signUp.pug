@@ -1,4 +1,5 @@
 extends layout
+include mixins/errorlist.pug
 
 block content
   h1= title
@@ -36,9 +37,4 @@ block content
         )
     button(type="submit") Submit
 
-  if errors
-    article
-      h4 Please check the following requirements:
-      ul
-        for error in errors
-          li= error.msg
+  +errorlist(errors)

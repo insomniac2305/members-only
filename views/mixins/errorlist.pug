@@ -1,0 +1,7 @@
+mixin errorlist(errors)
+  if errors
+    article
+      h4 The following errors have occured:
+      ul
+        for error in errors
+          li= error.msg
