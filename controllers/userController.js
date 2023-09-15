@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const User = require("../models/user");
+const passport = require("passport");
 
 const bodyRequired = (field, fieldName) =>
   body(field)
@@ -48,7 +49,7 @@ exports.signUpPost = [
       res.render("signup", {
         title: "Sign up",
         user: user,
-        errors: errors.array(),
+        errors: errors.array().map((e) => e.msg),
       });
       return;
     }
@@ -61,6 +62,12 @@ exports.signUpPost = [
 
       await user.save();
 
+      req.login(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+      });
+
       res.redirect("/");
     });
   }),
@@ -70,9 +77,32 @@ exports.logInGet = (req, res, next) => {
   res.render("login", { title: "Log in" });
 };
 
-exports.logInPost = (req, res, next) => {
-  res.render("login", { title: "Log in" });
-};
+exports.logInPost = [
+  bodyRequired("email", "E-mail")
+    .isEmail()
+    .withMessage("E-Mail must have valid format"),
+  bodyRequired("password", "Password"),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("login", {
+        title: "Log in",
+        user: { email: req.body.email },
+        errors: errors.array().map((e) => e.msg),
+      });
+    } else {
+      next();
+    }
+  },
+
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/user/log-in",
+    failureMessage: true,
+  }),
+];
 
 exports.joinClubGet = (req, res, next) => {
   res.render("joinclub", { title: "Join club" });
@@ -90,7 +120,7 @@ exports.joinClubPost = [
     if (!errors.isEmpty() || !user) {
       res.render("joinclub", {
         title: "Join club",
-        errors: errors.array(),
+        errors: errors.array().map((e) => e.msg),
       });
       return;
     }
@@ -101,3 +131,13 @@ exports.joinClubPost = [
     res.redirect("/");
   }),
 ];
+
+exports.logOutGet = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect("/");
+  });
+};

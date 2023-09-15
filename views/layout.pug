@@ -9,16 +9,21 @@ html
   body
     nav.container-fluid
       ul
-        li 
+        li
           strong
             a(href="/") Home
       ul
-        li 
-          a(href="/user/sign-up") Sign up
-        li 
-          a(href="/user/log-in" role="button") Log in
-        li 
-          a.secondary(href="/user/join-club" role="button") Join club
+        if currentUser
+          unless currentUser.isMember
+            li
+              a.secondary(href="/user/join-club", role="button") Join club
+          li
+            a.secondary(href="/user/log-out") Log out
+        else
+          li
+            a(href="/user/sign-up") Sign up
+          li
+            a(href="/user/log-in", role="button") Log in
     main.container
       block content
     footer
