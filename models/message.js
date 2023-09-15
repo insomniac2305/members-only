@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 
 const messageSchema = new Schema(
   {
-    title: { type: String, required: true },
     content: { type: String, required: true },
     creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
@@ -13,7 +12,7 @@ const messageSchema = new Schema(
 );
 
 messageSchema.virtual("createdAtFormatted").get(function () {
-  return this.createdAt ? DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED) : "";
+  return this.createdAt ? DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATETIME_SHORT) : "";
 });
 
 module.exports = mongoose.model("Message", messageSchema);

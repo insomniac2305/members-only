@@ -5,13 +5,7 @@ require("dotenv").config();
 
 const User = require("../models/user");
 const passport = require("passport");
-
-const bodyRequired = (field, fieldName) =>
-  body(field)
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage(`${fieldName} must be specified`);
+const { bodyRequired } = require("./controllerHelper");
 
 exports.signUpGet = (req, res, next) => {
   res.render("signup", { title: "Sign up" });

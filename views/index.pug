@@ -2,7 +2,25 @@ extends layout
 
 block content
   if currentUser
-    h1 Hello #{currentUser.firstName}
-  else 
-    h1= title
-  p Welcome to #{ title }
+    h1 Welcome #{ currentUser.firstName }
+    form(action="/new-message", method="post") 
+      label(for="message") Your message
+        textarea#message(
+          name="message",
+          rows="3",
+          maxlength=500,
+          placeholder="Type your message with max. 500 characters",
+          style="resize: vertical",
+          required
+        )
+      button(type="submit") Submit
+  else
+    hgroup
+      h1= title
+      h2 See messages from our members below
+  h2 Message board
+  if messages
+    each message in messages
+      blockquote!= message.content
+        if currentUser && currentUser.isMember
+          footer #{ message.creator.name } at #{ message.createdAtFormatted }
