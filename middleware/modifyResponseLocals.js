@@ -5,7 +5,7 @@ const addCurrentUser = (req, res, next) => {
 
 const addSessionMessages = (req, res, next) => {
   var msgs = req.session.messages || [];
-  res.locals.messages = msgs;
+  res.locals.sessionMessages = msgs;
   res.locals.hasMessages = msgs.length > 0;
   req.session.messages = [];
   next();
