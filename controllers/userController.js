@@ -12,7 +12,7 @@ const bodyRequired = (field, fieldName) =>
     .withMessage(`${fieldName} must be specified`);
 
 exports.signUpGet = (req, res, next) => {
-  res.render("signUp", { title: "Sign up" });
+  res.render("signup", { title: "Sign up" });
 };
 
 exports.signUpPost = [
@@ -44,7 +44,7 @@ exports.signUpPost = [
     });
 
     if (!errors.isEmpty()) {
-      res.render("signUp", {
+      res.render("signup", {
         title: "Sign up",
         user: user,
         errors: errors.array(),
@@ -64,3 +64,19 @@ exports.signUpPost = [
     });
   }),
 ];
+
+exports.logInGet = (req, res, next) => {
+  res.render("login", { title: "Log in" });
+};
+
+exports.logInPost = (req, res, next) => {
+  res.render("login", { title: "Log in" });
+};
+
+exports.joinClubGet = (req, res, next) => {
+  res.render("joinclub", { title: "Join club" });
+};
+
+exports.joinClubPost = (req, res, next) => {
+  res.render("joinclub", { title: "Join club" });
+};

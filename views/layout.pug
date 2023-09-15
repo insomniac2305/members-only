@@ -9,9 +9,16 @@ html
   body
     nav.container-fluid
       ul
-        li
+        li 
           strong
             a(href="/") Home
+      ul
+        li 
+          a(href="/user/sign-up") Sign up
+        li 
+          a(href="/user/log-in" role="button") Log in
+        li 
+          a.secondary(href="/user/join-club" role="button") Join club
     main.container
       block content
     footer
