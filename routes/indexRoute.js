@@ -7,4 +7,6 @@ router.get("/", messageController.messageBoardGet);
 
 router.post("/new-message", messageController.newMessagePost);
 
+router.post("/delete-message", messageController.deleteMessagePost);
+
 module.exports = router;

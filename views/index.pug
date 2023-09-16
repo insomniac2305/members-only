@@ -21,6 +21,11 @@ block content
   h2 Message board
   if messages
     each message in messages
-      blockquote!= message.content
-        if currentUser && currentUser.isMember
-          footer #{ message.creator.name } at #{ message.createdAtFormatted }
+      .message.grid
+        blockquote!= message.content
+          if currentUser && currentUser.isMember
+            footer #{ message.creator.name } at #{ message.createdAtFormatted }
+        if currentUser && currentUser.isAdmin
+          form(action="/delete-message", method="post") 
+            input(type="hidden", name="messageid", value=message._id)
+            button.secondary.outline(type="submit") Delete

@@ -1,0 +1,9 @@
+@media (min-width: 992px) {
+  .message.grid {
+    grid-template-columns: 1fr auto;
+  }
+  .message.grid > form {
+    place-self: center center;
+    margin: 0;
+  }
+}
