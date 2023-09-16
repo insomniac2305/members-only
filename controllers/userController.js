@@ -25,6 +25,8 @@ exports.signUpPost = [
       }
     }),
 
+  body("isadmin").escape(),
+
   bodyRequired("password", "Password"),
   bodyRequired("confirm-password", "Password confirmation")
     .custom((confirmPassword, { req }) => confirmPassword === req.body.password)
@@ -37,6 +39,8 @@ exports.signUpPost = [
       firstName: req.body.firstname,
       lastName: req.body.lastname,
       email: req.body.email,
+      isMember: !!req.body.isadmin,
+      isAdmin: !!req.body.isadmin,
     });
 
     if (!errors.isEmpty()) {
@@ -60,9 +64,8 @@ exports.signUpPost = [
         if (err) {
           return next(err);
         }
+        res.redirect("/");
       });
-
-      res.redirect("/");
     });
   }),
 ];

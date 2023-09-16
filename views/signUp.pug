@@ -35,6 +35,15 @@ block content
           name="confirm-password",
           required
         )
+    label(for="isadmin", style="margin-bottom: 20px") 
+      input#isadmin(
+        type="checkbox",
+        name="isadmin",
+        role="switch",
+        checked=user ? user.isAdmin : false,
+        value="isadmin"
+      )
+      | Is admin?
     button(type="submit") Submit
 
   +errorlist(errors)
