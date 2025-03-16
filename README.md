@@ -36,7 +36,7 @@ built mainly with Express and MongoDB to practice setting up a full-stack applic
 
 1. **Clone the repository:**
    ```sh
-   git clone <repository_url>
+   git clone https://github.com/insomniac2305/members-only.git
    cd members-only
    ```
 2. **Install dependencies:**
